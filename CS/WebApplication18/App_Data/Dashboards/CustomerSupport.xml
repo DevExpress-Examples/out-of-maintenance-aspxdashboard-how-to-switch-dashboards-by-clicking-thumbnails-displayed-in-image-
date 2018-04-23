@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard CurrencyCulture="en-US">
+  <Title Text="Customer Support" />
+  <DataSources>
+    <ObjectDataSource ComponentName="dsCustomerSupport">
+      <Name>Customer Support</Name>
+      <DataMember>CustomerSupportItem</DataMember>
+    </ObjectDataSource>
+  </DataSources>
+  <Items>
+    <Chart ComponentName="chartProcessedIssuesByPlatform" Name="Processed Issues by Platform / Employee" DataSource="dsCustomerSupport">
+      <InteractivityOptions IsDrillDownEnabled="true" />
+      <DataItems>
+        <Dimension DataMember="IssueType" SortByMeasure="DataItem5" UniqueName="DataItem0" />
+        <Measure DataMember="Opened" SummaryType="Count" UniqueName="DataItem1" />
+        <Dimension DataMember="ProductName" SortByMeasure="DataItem1" TopNCount="3" TopNMeasure="DataItem1" UniqueName="DataItem2" />
+        <Dimension DataMember="Employee" SortByMeasure="DataItem1" UniqueName="DataItem4" />
+        <Measure DataMember="IssueTypeIndex" UniqueName="DataItem5" />
+      </DataItems>
+      <HiddenMeasures>
+        <Measure UniqueName="DataItem5" />
+      </HiddenMeasures>
+      <SeriesDimensions>
+        <SeriesDimension UniqueName="DataItem0" />
+      </SeriesDimensions>
+      <Arguments>
+        <Argument UniqueName="DataItem2" />
+        <Argument UniqueName="DataItem4" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <AxisY Title="Issue Count" />
+          <Series>
+            <Simple Name="Opened (Count)" SeriesType="StackedBar">
+              <Value UniqueName="DataItem1" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+    </Chart>
+    <RangeFilter ComponentName="range" Name="Range Filter 1" DataSource="dsCustomerSupport">
+      <DataItems>
+        <Dimension DataMember="Opened" Name="Date" DateTimeGroupInterval="MonthYear" UniqueName="DataItem1" />
+        <Dimension DataMember="IssueType" UniqueName="DataItem2" />
+        <Measure DataMember="Opened" SummaryType="Count" UniqueName="DataItem0" />
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension UniqueName="DataItem2" />
+      </SeriesDimensions>
+      <Argument UniqueName="DataItem1" />
+      <Series>
+        <Simple SeriesType="Line">
+          <Value UniqueName="DataItem0" />
+        </Simple>
+      </Series>
+      <DateTimePeriods>
+        <DateTimePeriod Name="3 Months">
+          <StartLimit>
+            <FlowDateTimePeriodLimit Interval="Month" Offset="-2" />
+          </StartLimit>
+          <EndLimit />
+        </DateTimePeriod>
+        <DateTimePeriod Name="6 Months">
+          <StartLimit>
+            <FlowDateTimePeriodLimit Interval="Month" Offset="-5" />
+          </StartLimit>
+          <EndLimit />
+        </DateTimePeriod>
+        <DateTimePeriod Name="Quarter to date">
+          <StartLimit>
+            <FlowDateTimePeriodLimit Interval="Quarter" />
+          </StartLimit>
+          <EndLimit>
+            <FlowDateTimePeriodLimit Interval="Day" />
+          </EndLimit>
+        </DateTimePeriod>
+        <DateTimePeriod Name="Year to date">
+          <StartLimit>
+            <FlowDateTimePeriodLimit />
+          </StartLimit>
+          <EndLimit>
+            <FlowDateTimePeriodLimit Interval="Day" />
+          </EndLimit>
+        </DateTimePeriod>
+      </DateTimePeriods>
+    </RangeFilter>
+    <Chart ComponentName="chartAvgResponseTimeByPlatform" Name="Average Response Time by Platform / Employee" DataSource="dsCustomerSupport">
+      <InteractivityOptions IsDrillDownEnabled="true" />
+      <DataItems>
+        <Measure DataMember="ResolvedTime" SummaryType="Average" UniqueName="DataItem1" />
+        <Dimension DataMember="IssueType" SortByMeasure="DataItem0" UniqueName="DataItem3" />
+        <Dimension DataMember="ProductName" SortOrder="Descending" UniqueName="DataItem2" />
+        <Measure DataMember="IssueTypeIndex" SummaryType="Min" UniqueName="DataItem0" />
+        <Dimension DataMember="Employee" SortByMeasure="DataItem1" UniqueName="DataItem5" />
+      </DataItems>
+      <HiddenMeasures>
+        <Measure UniqueName="DataItem0" />
+      </HiddenMeasures>
+      <SeriesDimensions>
+        <SeriesDimension UniqueName="DataItem3" />
+      </SeriesDimensions>
+      <Arguments>
+        <Argument UniqueName="DataItem2" />
+        <Argument UniqueName="DataItem5" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <AxisY Title="Response Time, Hours" />
+          <Series>
+            <Simple Name="ResolvedTime (Average)">
+              <Value UniqueName="DataItem1" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+    </Chart>
+    <Chart ComponentName="chartOpenedIssuesByMonth" Name="Opened Issues by Month" DataSource="dsCustomerSupport">
+      <InteractivityOptions IgnoreMasterFilters="true" />
+      <DataItems>
+        <Dimension DataMember="Opened" UniqueName="DataItem1" />
+        <Dimension DataMember="Opened" DateTimeGroupInterval="Month" UniqueName="DataItem2" />
+        <Measure DataMember="Opened" SummaryType="Count" UniqueName="DataItem3" />
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension UniqueName="DataItem1" />
+      </SeriesDimensions>
+      <Arguments>
+        <Argument UniqueName="DataItem2" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <AxisY TitleVisible="false" Title="Opened (Count)" />
+          <Series>
+            <Simple Name="Opened (Count)" SeriesType="Line">
+              <Value UniqueName="DataItem3" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+    </Chart>
+    <Chart ComponentName="chartAvgResponseTimeByMonth" Name="Average Response Time (h) by Month" DataSource="dsCustomerSupport">
+      <InteractivityOptions IgnoreMasterFilters="true" />
+      <DataItems>
+        <Dimension DataMember="Opened" UniqueName="DataItem1" />
+        <Dimension DataMember="Opened" DateTimeGroupInterval="Month" UniqueName="DataItem2" />
+        <Measure DataMember="ResolvedTime" SummaryType="Average" UniqueName="DataItem0" />
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension UniqueName="DataItem1" />
+      </SeriesDimensions>
+      <Arguments>
+        <Argument UniqueName="DataItem2" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <AxisY TitleVisible="false" Title="ResolvedTime (Average)" />
+          <Series>
+            <Simple Name="ResolvedTime (Average)" SeriesType="Line">
+              <Value UniqueName="DataItem0" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+    </Chart>
+  </Items>
+  <ColorScheme>
+    <Entry DataSource="dsCustomerSupport" PaletteIndex="1">
+      <DimensionKeys>
+        <DimensionKey>
+          <Definition DataMember="IssueType" />
+          <Value Type="System.String" Value="Critical" />
+        </DimensionKey>
+      </DimensionKeys>
+    </Entry>
+    <Entry DataSource="dsCustomerSupport" Color="-5273005">
+      <DimensionKeys>
+        <DimensionKey>
+          <Definition DataMember="IssueType" />
+          <Value Type="System.String" Value="Urgent" />
+        </DimensionKey>
+      </DimensionKeys>
+    </Entry>
+    <Entry DataSource="dsCustomerSupport" Color="-10515563">
+      <DimensionKeys>
+        <DimensionKey>
+          <Definition DataMember="IssueType" />
+          <Value Type="System.String" Value="Normal" />
+        </DimensionKey>
+      </DimensionKeys>
+    </Entry>
+    <Entry DataSource="dsCustomerSupport" Color="-6987919">
+      <DimensionKeys>
+        <DimensionKey>
+          <Definition DataMember="Opened" />
+          <Value Type="System.Int32" Value="2015" />
+        </DimensionKey>
+      </DimensionKeys>
+    </Entry>
+    <Entry DataSource="dsCustomerSupport" Color="-8022426">
+      <DimensionKeys>
+        <DimensionKey>
+          <Definition DataMember="Opened" />
+          <Value Type="System.Int32" Value="2016" />
+        </DimensionKey>
+      </DimensionKeys>
+    </Entry>
+  </ColorScheme>
+  <LayoutTree>
+    <LayoutGroup Orientation="Vertical">
+      <LayoutGroup Weight="85.544217687074834">
+        <LayoutGroup Orientation="Vertical" Weight="49.006622516556291">
+          <LayoutItem DashboardItem="chartOpenedIssuesByMonth" Weight="42.544731610337969" />
+          <LayoutItem DashboardItem="chartProcessedIssuesByPlatform" Weight="57.455268389662031" />
+        </LayoutGroup>
+        <LayoutGroup Orientation="Vertical" Weight="50.993377483443709">
+          <LayoutItem DashboardItem="chartAvgResponseTimeByMonth" Weight="42.544731610337969" />
+          <LayoutItem DashboardItem="chartAvgResponseTimeByPlatform" Weight="57.455268389662031" />
+        </LayoutGroup>
+      </LayoutGroup>
+      <LayoutItem DashboardItem="range" Weight="14.45578231292517" />
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>
