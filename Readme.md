@@ -1,7 +1,7 @@
 <!-- default file list -->
 *Files to look at*:
 
-* [Default.aspx](./CS/WebApplication18/Default.aspx) (VB: [Default.aspx.vb](./VB/WebApplication18/Default.aspx.vb))
+* [Default.aspx](./CS/WebApplication18/Default.aspx) (VB: [Default.aspx](./VB/WebApplication18/Default.aspx))
 * [Default.aspx.cs](./CS/WebApplication18/Default.aspx.cs) (VB: [Default.aspx.vb](./VB/WebApplication18/Default.aspx.vb))
 <!-- default file list end -->
 # ASPxDashboard - How to switch dashboards by clicking thumbnails displayed in Image Slider
