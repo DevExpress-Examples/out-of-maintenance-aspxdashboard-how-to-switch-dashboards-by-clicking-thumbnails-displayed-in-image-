@@ -1,324 +1,396 @@
-﻿Imports System
+Imports System
 Imports System.Collections.Generic
 Imports System.Data
 
 Namespace DashboardMainDemo
+
     Public Class SalesPerformanceDataGenerator
-        Inherits SalesDataGenerator
+        Inherits DashboardMainDemo.SalesDataGenerator
 
         Public Class TotalSalesItem
+
             Private uSoldYTDTarget As Integer
+
             Private uSoldYTD As Integer
+
             Private revQTDTarget As Decimal
+
             Private revQTD As Decimal
+
             Private revYTDTarget As Decimal
+
             Private revYTD As Decimal
+
             Private prod As String
+
             Private cat As String
+
             Private st As String
 
-            Public Property State() As String
+            Public Property State As String
                 Get
-                    Return st
+                    Return Me.st
                 End Get
+
                 Set(ByVal value As String)
-                    st = value
+                    Me.st = value
                 End Set
             End Property
-            Public Property Category() As String
+
+            Public Property Category As String
                 Get
-                    Return cat
+                    Return Me.cat
                 End Get
+
                 Set(ByVal value As String)
-                    cat = value
+                    Me.cat = value
                 End Set
             End Property
-            Public Property Product() As String
+
+            Public Property Product As String
                 Get
-                    Return prod
+                    Return Me.prod
                 End Get
+
                 Set(ByVal value As String)
-                    prod = value
+                    Me.prod = value
                 End Set
             End Property
-            Public Property RevenueYTD() As Decimal
+
+            Public Property RevenueYTD As Decimal
                 Get
-                    Return revYTD
+                    Return Me.revYTD
                 End Get
+
                 Set(ByVal value As Decimal)
-                    revYTD = value
+                    Me.revYTD = value
                 End Set
             End Property
-            Public Property RevenueYTDTarget() As Decimal
+
+            Public Property RevenueYTDTarget As Decimal
                 Get
-                    Return revYTDTarget
+                    Return Me.revYTDTarget
                 End Get
+
                 Set(ByVal value As Decimal)
-                    revYTDTarget = value
+                    Me.revYTDTarget = value
                 End Set
             End Property
-            Public Property RevenueQTD() As Decimal
+
+            Public Property RevenueQTD As Decimal
                 Get
-                    Return revQTD
+                    Return Me.revQTD
                 End Get
+
                 Set(ByVal value As Decimal)
-                    revQTD = value
+                    Me.revQTD = value
                 End Set
             End Property
-            Public Property RevenueQTDTarget() As Decimal
+
+            Public Property RevenueQTDTarget As Decimal
                 Get
-                    Return revQTDTarget
+                    Return Me.revQTDTarget
                 End Get
+
                 Set(ByVal value As Decimal)
-                    revQTDTarget = value
+                    Me.revQTDTarget = value
                 End Set
             End Property
-            Public Property UnitsSoldYTD() As Integer
+
+            Public Property UnitsSoldYTD As Integer
                 Get
-                    Return uSoldYTD
+                    Return Me.uSoldYTD
                 End Get
+
                 Set(ByVal value As Integer)
-                    uSoldYTD = value
+                    Me.uSoldYTD = value
                 End Set
             End Property
-            Public Property UnitsSoldYTDTarget() As Integer
+
+            Public Property UnitsSoldYTDTarget As Integer
                 Get
-                    Return uSoldYTDTarget
+                    Return Me.uSoldYTDTarget
                 End Get
+
                 Set(ByVal value As Integer)
-                    uSoldYTDTarget = value
+                    Me.uSoldYTDTarget = value
                 End Set
             End Property
         End Class
 
         Public Class MonthlySalesItem
+
             Private uSoldTarget As Integer
+
             Private uSold As Integer
+
             Private revTarget As Decimal
+
             Private rev As Decimal
-            Private curtDate As Date
+
+            Private curtDate As System.DateTime
+
             Private cat As String
+
             Private prod As String
+
             Private st As String
 
-            Public Property State() As String
+            Public Property State As String
                 Get
-                    Return st
+                    Return Me.st
                 End Get
+
                 Set(ByVal value As String)
-                    st = value
+                    Me.st = value
                 End Set
             End Property
-            Public Property Product() As String
+
+            Public Property Product As String
                 Get
-                    Return prod
+                    Return Me.prod
                 End Get
+
                 Set(ByVal value As String)
-                    prod = value
+                    Me.prod = value
                 End Set
             End Property
-            Public Property Category() As String
+
+            Public Property Category As String
                 Get
-                    Return cat
+                    Return Me.cat
                 End Get
+
                 Set(ByVal value As String)
-                    cat = value
+                    Me.cat = value
                 End Set
             End Property
-            Public Property CurrentDate() As Date
+
+            Public Property CurrentDate As DateTime
                 Get
-                    Return curtDate
+                    Return Me.curtDate
                 End Get
-                Set(ByVal value As Date)
-                    curtDate = value
+
+                Set(ByVal value As DateTime)
+                    Me.curtDate = value
                 End Set
             End Property
-            Public Property Revenue() As Decimal
+
+            Public Property Revenue As Decimal
                 Get
-                    Return rev
+                    Return Me.rev
                 End Get
+
                 Set(ByVal value As Decimal)
-                    rev = value
+                    Me.rev = value
                 End Set
             End Property
-            Public Property RevenueTarget() As Decimal
+
+            Public Property RevenueTarget As Decimal
                 Get
-                    Return revTarget
+                    Return Me.revTarget
                 End Get
+
                 Set(ByVal value As Decimal)
-                    revTarget = value
+                    Me.revTarget = value
                 End Set
             End Property
-            Public Property UnitsSold() As Integer
+
+            Public Property UnitsSold As Integer
                 Get
-                    Return uSold
+                    Return Me.uSold
                 End Get
+
                 Set(ByVal value As Integer)
-                    uSold = value
+                    Me.uSold = value
                 End Set
             End Property
-            Public Property UnitsSoldTarget() As Integer
+
+            Public Property UnitsSoldTarget As Integer
                 Get
-                    Return uSoldTarget
+                    Return Me.uSoldTarget
                 End Get
+
                 Set(ByVal value As Integer)
-                    uSoldTarget = value
+                    Me.uSoldTarget = value
                 End Set
             End Property
         End Class
 
         Public Class KeyMetricsItem
+
             Private marShare As Single
+
             Private newCustYTDTarget As Integer
+
             Private newCustYTD As Integer
+
             Private avgOrdrSizeYTDTarget As Decimal
+
             Private avgOrdrSizeYTD As Decimal
+
             Private proYTDTarget As Decimal
+
             Private proYTD As Decimal
+
             Private expYTDTarget As Decimal
+
             Private expYTD As Decimal
+
             Private revYTDTarget As Decimal
+
             Private revYTD As Decimal
 
-            Public Property RevenueYTD() As Decimal
+            Public Property RevenueYTD As Decimal
                 Get
-                    Return revYTD
+                    Return Me.revYTD
                 End Get
+
                 Set(ByVal value As Decimal)
-                    revYTD = value
+                    Me.revYTD = value
                 End Set
             End Property
-            Public Property RevenueYTDTarget() As Decimal
+
+            Public Property RevenueYTDTarget As Decimal
                 Get
-                    Return revYTDTarget
+                    Return Me.revYTDTarget
                 End Get
+
                 Set(ByVal value As Decimal)
-                    revYTDTarget = value
+                    Me.revYTDTarget = value
                 End Set
             End Property
-            Public Property ExpencesYTD() As Decimal
+
+            Public Property ExpencesYTD As Decimal
                 Get
-                    Return expYTD
+                    Return Me.expYTD
                 End Get
+
                 Set(ByVal value As Decimal)
-                    expYTD = value
+                    Me.expYTD = value
                 End Set
             End Property
-            Public Property ExpencesYTDTarget() As Decimal
+
+            Public Property ExpencesYTDTarget As Decimal
                 Get
-                    Return expYTDTarget
+                    Return Me.expYTDTarget
                 End Get
+
                 Set(ByVal value As Decimal)
-                    expYTDTarget = value
+                    Me.expYTDTarget = value
                 End Set
             End Property
-            Public Property ProfitYTD() As Decimal
+
+            Public Property ProfitYTD As Decimal
                 Get
-                    Return proYTD
+                    Return Me.proYTD
                 End Get
+
                 Set(ByVal value As Decimal)
-                    proYTD = value
+                    Me.proYTD = value
                 End Set
             End Property
-            Public Property ProfitYTDTarget() As Decimal
+
+            Public Property ProfitYTDTarget As Decimal
                 Get
-                    Return proYTDTarget
+                    Return Me.proYTDTarget
                 End Get
+
                 Set(ByVal value As Decimal)
-                    proYTDTarget = value
+                    Me.proYTDTarget = value
                 End Set
             End Property
-            Public Property AvgOrderSizeYTD() As Decimal
+
+            Public Property AvgOrderSizeYTD As Decimal
                 Get
-                    Return avgOrdrSizeYTD
+                    Return Me.avgOrdrSizeYTD
                 End Get
+
                 Set(ByVal value As Decimal)
-                    avgOrdrSizeYTD = value
+                    Me.avgOrdrSizeYTD = value
                 End Set
             End Property
-            Public Property AvgOrderSizeYTDTarget() As Decimal
+
+            Public Property AvgOrderSizeYTDTarget As Decimal
                 Get
-                    Return avgOrdrSizeYTDTarget
+                    Return Me.avgOrdrSizeYTDTarget
                 End Get
+
                 Set(ByVal value As Decimal)
-                    avgOrdrSizeYTDTarget = value
+                    Me.avgOrdrSizeYTDTarget = value
                 End Set
             End Property
-            Public Property NewCustomersYTD() As Integer
+
+            Public Property NewCustomersYTD As Integer
                 Get
-                    Return newCustYTD
+                    Return Me.newCustYTD
                 End Get
+
                 Set(ByVal value As Integer)
-                    newCustYTD = value
+                    Me.newCustYTD = value
                 End Set
             End Property
-            Public Property NewCustomersYTDTarget() As Integer
+
+            Public Property NewCustomersYTDTarget As Integer
                 Get
-                    Return newCustYTDTarget
+                    Return Me.newCustYTDTarget
                 End Get
+
                 Set(ByVal value As Integer)
-                    newCustYTDTarget = value
+                    Me.newCustYTDTarget = value
                 End Set
             End Property
-            Public Property MarketShare() As Single
+
+            Public Property MarketShare As Single
                 Get
-                    Return marShare
+                    Return Me.marShare
                 End Get
+
                 Set(ByVal value As Single)
-                    marShare = value
+                    Me.marShare = value
                 End Set
             End Property
         End Class
 
+        Private ReadOnly monthlySalesField As System.Collections.Generic.List(Of DashboardMainDemo.SalesPerformanceDataGenerator.MonthlySalesItem) = New System.Collections.Generic.List(Of DashboardMainDemo.SalesPerformanceDataGenerator.MonthlySalesItem)()
 
-        Private ReadOnly monthlySales_Renamed As New List(Of MonthlySalesItem)()
+        Private ReadOnly totalSalesField As System.Collections.Generic.List(Of DashboardMainDemo.SalesPerformanceDataGenerator.TotalSalesItem) = New System.Collections.Generic.List(Of DashboardMainDemo.SalesPerformanceDataGenerator.TotalSalesItem)()
 
-        Private ReadOnly totalSales_Renamed As New List(Of TotalSalesItem)()
-        Private ReadOnly item As New KeyMetricsItem()
+        Private ReadOnly item As DashboardMainDemo.SalesPerformanceDataGenerator.KeyMetricsItem = New DashboardMainDemo.SalesPerformanceDataGenerator.KeyMetricsItem()
 
-        Public ReadOnly Property MonthlySales() As IEnumerable(Of MonthlySalesItem)
+        Public ReadOnly Property MonthlySales As IEnumerable(Of DashboardMainDemo.SalesPerformanceDataGenerator.MonthlySalesItem)
             Get
-                Return monthlySales_Renamed
-            End Get
-        End Property
-        Public ReadOnly Property TotalSales() As IEnumerable(Of TotalSalesItem)
-            Get
-                Return totalSales_Renamed
-            End Get
-        End Property
-        Public ReadOnly Property KeyMetrics() As IEnumerable(Of KeyMetricsItem)
-            Get
-                Return New KeyMetricsItem() { item }
+                Return Me.monthlySalesField
             End Get
         End Property
 
-        Public Sub New(ByVal dataSet As DataSet)
+        Public ReadOnly Property TotalSales As IEnumerable(Of DashboardMainDemo.SalesPerformanceDataGenerator.TotalSalesItem)
+            Get
+                Return Me.totalSalesField
+            End Get
+        End Property
+
+        Public ReadOnly Property KeyMetrics As IEnumerable(Of DashboardMainDemo.SalesPerformanceDataGenerator.KeyMetricsItem)
+            Get
+                Return New DashboardMainDemo.SalesPerformanceDataGenerator.KeyMetricsItem() {Me.item}
+            End Get
+        End Property
+
+        Public Sub New(ByVal dataSet As System.Data.DataSet)
             MyBase.New(dataSet)
         End Sub
-        Protected Overrides Sub Generate(ByVal context As Context)
-            Dim tsItem As TotalSalesItem = New TotalSalesItem With { _
-                .State = context.State, _
-                .Category = context.CategoryName, _
-                .Product = context.ProductName _
-            }
-            Dim y As Integer = Date.Today.Year - 1
+
+        Protected Overrides Sub Generate(ByVal context As DashboardMainDemo.SalesDataGenerator.Context)
+            Dim tsItem As DashboardMainDemo.SalesPerformanceDataGenerator.TotalSalesItem = New DashboardMainDemo.SalesPerformanceDataGenerator.TotalSalesItem With {.State = context.State, .Category = context.CategoryName, .Product = context.ProductName}
+            Dim y As Integer = System.DateTime.Today.Year - 1
             For month As Integer = 1 To 12
-                Dim dt As New Date(y, month, 1)
-                context.UnitsSoldGenerator.Next()
+                Dim dt As System.DateTime = New System.DateTime(y, month, 1)
+                context.UnitsSoldGenerator.[Next]()
                 Dim uSold As Integer = context.UnitsSoldGenerator.UnitsSold
                 Dim uSoldTarget As Integer = context.UnitsSoldGenerator.UnitsSoldTarget
                 Dim rev As Decimal = uSold * context.ListPrice
                 Dim revTarget As Decimal = uSoldTarget * context.ListPrice
-                monthlySales_Renamed.Add(New MonthlySalesItem With { _
-                    .State = context.State, _
-                    .Product = context.ProductName, _
-                    .Category = context.CategoryName, _
-                    .CurrentDate = dt, _
-                    .UnitsSold = uSold, _
-                    .UnitsSoldTarget = uSoldTarget, _
-                    .Revenue = rev, _
-                    .RevenueTarget = revTarget _
-                })
+                Me.monthlySalesField.Add(New DashboardMainDemo.SalesPerformanceDataGenerator.MonthlySalesItem With {.State = context.State, .Product = context.ProductName, .Category = context.CategoryName, .CurrentDate = dt, .UnitsSold = uSold, .UnitsSoldTarget = uSoldTarget, .Revenue = rev, .RevenueTarget = revTarget})
                 tsItem.RevenueYTD += rev
                 tsItem.RevenueYTDTarget += revTarget
                 tsItem.UnitsSoldYTD += uSold
@@ -327,22 +399,25 @@ Namespace DashboardMainDemo
                     tsItem.RevenueQTD += rev
                     tsItem.RevenueQTDTarget += revTarget
                 End If
-                item.RevenueYTD += rev
-                item.RevenueYTDTarget += revTarget
-            Next month
-            totalSales_Renamed.Add(tsItem)
+
+                Me.item.RevenueYTD += rev
+                Me.item.RevenueYTDTarget += revTarget
+            Next
+
+            Me.totalSalesField.Add(tsItem)
         End Sub
+
         Protected Overrides Sub EndGenerate()
             MyBase.EndGenerate()
-            item.ExpencesYTD = item.RevenueYTDTarget * 0.2D
-            item.ExpencesYTDTarget = item.RevenueYTDTarget * 0.1999D
-            item.ProfitYTD = item.RevenueYTD - item.ExpencesYTD
-            item.ProfitYTDTarget = item.RevenueYTDTarget - item.ExpencesYTDTarget
-            item.AvgOrderSizeYTD = item.RevenueYTD * 0.006D
-            item.AvgOrderSizeYTDTarget = item.RevenueYTDTarget * 0.0055D
-            item.NewCustomersYTD = CInt((Math.Round(item.RevenueYTD * 0.0013D)))
-            item.NewCustomersYTDTarget = CInt((Math.Round(item.RevenueYTDTarget * 0.00125D)))
-            item.MarketShare = 0.23F
+            Me.item.ExpencesYTD = Me.item.RevenueYTDTarget * 0.2D
+            Me.item.ExpencesYTDTarget = Me.item.RevenueYTDTarget * 0.1999D
+            Me.item.ProfitYTD = Me.item.RevenueYTD - Me.item.ExpencesYTD
+            Me.item.ProfitYTDTarget = Me.item.RevenueYTDTarget - Me.item.ExpencesYTDTarget
+            Me.item.AvgOrderSizeYTD = Me.item.RevenueYTD * 0.006D
+            Me.item.AvgOrderSizeYTDTarget = Me.item.RevenueYTDTarget * 0.0055D
+            Me.item.NewCustomersYTD = CInt(System.Math.Round(Me.item.RevenueYTD * 0.0013D))
+            Me.item.NewCustomersYTDTarget = CInt(System.Math.Round(Me.item.RevenueYTDTarget * 0.00125D))
+            Me.item.MarketShare = 0.23F
         End Sub
     End Class
 End Namespace

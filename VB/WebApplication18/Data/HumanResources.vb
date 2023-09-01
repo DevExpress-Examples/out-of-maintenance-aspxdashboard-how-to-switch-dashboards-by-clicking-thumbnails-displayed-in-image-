@@ -1,315 +1,360 @@
-﻿Imports System
+Imports System
 Imports System.Data
 Imports System.Collections.Generic
 
 Namespace DashboardMainDemo
+
     Public Class HumanResourcesData
+
         Public Class HistoryItem
-            Private retDate? As Date
-            Private hirDate? As Date
 
-            Public Property HiredDate() As Date?
+            Private retDate As System.DateTime?
+
+            Private hirDate As System.DateTime?
+
+            Public Property HiredDate As System.DateTime?
                 Get
-                    Return hirDate
+                    Return Me.hirDate
                 End Get
-                Set(ByVal value? As Date)
-                    hirDate = value
-                End Set
-            End Property
-            Public Property RetiredDate() As Date?
-                Get
-                    Return retDate
-                End Get
-                Set(ByVal value? As Date)
-                    retDate = value
+
+                Set(ByVal value As System.DateTime?)
+                    Me.hirDate = value
                 End Set
             End Property
 
-            Public Function IsEmployeed(ByVal dt As Date) As Boolean
-                Return (Not HiredDate.HasValue OrElse HiredDate.Value <= dt) AndAlso (Not RetiredDate.HasValue OrElse RetiredDate.Value >= dt)
+            Public Property RetiredDate As System.DateTime?
+                Get
+                    Return Me.retDate
+                End Get
+
+                Set(ByVal value As System.DateTime?)
+                    Me.retDate = value
+                End Set
+            End Property
+
+            Public Function IsEmployeed(ByVal dt As System.DateTime) As Boolean
+                Return(Not Me.HiredDate.HasValue OrElse Me.HiredDate.Value <= dt) AndAlso (Not Me.RetiredDate.HasValue OrElse Me.RetiredDate.Value >= dt)
             End Function
-            Public Function IsRetired(ByVal dt As Date) As Boolean
-                Return RetiredDate.HasValue AndAlso RetiredDate.Value = dt
+
+            Public Function IsRetired(ByVal dt As System.DateTime) As Boolean
+                Return Me.RetiredDate.HasValue AndAlso Me.RetiredDate.Value = dt
             End Function
         End Class
 
-        Private Const FullYears As Integer = 9
+        Const FullYears As Integer = 9
 
-        Private Shared Function GetEmployeeFullName(ByVal employee As DataRow) As String
-            Return DirectCast(employee("FullName"), String)
-        End Function
-        Private Shared Function GetEmployeeDepartmentID(ByVal employee As DataRow) As Integer
-            Return DirectCast(employee("DepartmentID"), Integer)
-        End Function
-        Private Shared Function GetDepartmentName(ByVal department As DataRow) As String
-            Return DirectCast(department("DepartmentName"), String)
-        End Function
-        Private Shared Function GetDepartmentBaseSalary(ByVal department As DataRow) As Decimal
-            Return DirectCast(department("BaseSalary"), Decimal)
+        Private Shared Function GetEmployeeFullName(ByVal employee As System.Data.DataRow) As String
+            Return CStr(employee("FullName"))
         End Function
 
-        Private ReadOnly employeesTable As DataTable
-        Private ReadOnly departmentsTable As DataTable
-        Private ReadOnly startDate As Date
-        Private ReadOnly endDate As Date
-        Private ReadOnly employeesHistory As New Dictionary(Of String, HistoryItem)()
-        Private ReadOnly rand As New Random()
-        Private ReadOnly deptData As New Dictionary(Of DepartmentDataKey, DepartmentData)()
-        Private ReadOnly empData As New List(Of EmployeeData)()
+        Private Shared Function GetEmployeeDepartmentID(ByVal employee As System.Data.DataRow) As Integer
+            Return CInt(employee("DepartmentID"))
+        End Function
 
-        Private ReadOnly Property Employees() As DataRowCollection
+        Private Shared Function GetDepartmentName(ByVal department As System.Data.DataRow) As String
+            Return CStr(department("DepartmentName"))
+        End Function
+
+        Private Shared Function GetDepartmentBaseSalary(ByVal department As System.Data.DataRow) As Decimal
+            Return CDec(department("BaseSalary"))
+        End Function
+
+        Private ReadOnly employeesTable As System.Data.DataTable
+
+        Private ReadOnly departmentsTable As System.Data.DataTable
+
+        Private ReadOnly startDate As System.DateTime
+
+        Private ReadOnly endDate As System.DateTime
+
+        Private ReadOnly employeesHistory As System.Collections.Generic.Dictionary(Of String, DashboardMainDemo.HumanResourcesData.HistoryItem) = New System.Collections.Generic.Dictionary(Of String, DashboardMainDemo.HumanResourcesData.HistoryItem)()
+
+        Private ReadOnly rand As System.Random = New System.Random()
+
+        Private ReadOnly deptData As System.Collections.Generic.Dictionary(Of DashboardMainDemo.DepartmentDataKey, DashboardMainDemo.DepartmentData) = New System.Collections.Generic.Dictionary(Of DashboardMainDemo.DepartmentDataKey, DashboardMainDemo.DepartmentData)()
+
+        Private ReadOnly empData As System.Collections.Generic.List(Of DashboardMainDemo.EmployeeData) = New System.Collections.Generic.List(Of DashboardMainDemo.EmployeeData)()
+
+        Private ReadOnly Property Employees As DataRowCollection
             Get
-                Return employeesTable.Rows
+                Return Me.employeesTable.Rows
             End Get
         End Property
-        Public ReadOnly Property DepartmentData() As IEnumerable(Of DepartmentData)
+
+        Public ReadOnly Property DepartmentData As IEnumerable(Of DashboardMainDemo.DepartmentData)
             Get
-                Return deptData.Values
-            End Get
-        End Property
-        Public ReadOnly Property EmployeeData() As IEnumerable(Of EmployeeData)
-            Get
-                Return empData
+                Return Me.deptData.Values
             End Get
         End Property
 
-        Public Sub New(ByVal dataSet As DataSet)
-            employeesTable = dataSet.Tables("Employees")
-            departmentsTable = dataSet.Tables("Departments")
-            endDate = New Date(Date.Today.Year, Date.Today.Month, 1)
-            endDate = endDate.AddMonths(-1)
-            startDate = New Date(endDate.Year - FullYears, 1, 1)
-            CreateImployeesHistory()
-            Dim dt As Date = startDate
-            Do While dt <= endDate
-                For Each employee As DataRow In Employees
-                    Dim fullName As String = GetEmployeeFullName(employee)
-                    Dim historyItem As HistoryItem = employeesHistory(fullName)
+        Public ReadOnly Property EmployeeData As IEnumerable(Of DashboardMainDemo.EmployeeData)
+            Get
+                Return Me.empData
+            End Get
+        End Property
+
+        Public Sub New(ByVal dataSet As System.Data.DataSet)
+            Me.employeesTable = dataSet.Tables("Employees")
+            Me.departmentsTable = dataSet.Tables("Departments")
+            Me.endDate = New System.DateTime(System.DateTime.Today.Year, System.DateTime.Today.Month, 1)
+            Me.endDate = Me.endDate.AddMonths(-1)
+            Me.startDate = New System.DateTime(Me.endDate.Year - DashboardMainDemo.HumanResourcesData.FullYears, 1, 1)
+            Me.CreateImployeesHistory()
+            Dim dt As System.DateTime = Me.startDate
+            While dt <= Me.endDate
+                For Each employee As System.Data.DataRow In Me.Employees
+                    Dim fullName As String = DashboardMainDemo.HumanResourcesData.GetEmployeeFullName(employee)
+                    Dim historyItem As DashboardMainDemo.HumanResourcesData.HistoryItem = Me.employeesHistory(fullName)
                     If historyItem.IsEmployeed(dt) Then
-                        Dim departmentID As Integer = GetEmployeeDepartmentID(employee)
-                        Dim department As DataRow = GetDepartmentByDepartmentID(departmentID)
-                        Dim departmentName As String = GetDepartmentName(department)
-                        Dim departmentDataKey As New DepartmentDataKey(dt, departmentName)
-                        Dim departmentDataValue As DepartmentData = Nothing
-                        If Not deptData.TryGetValue(departmentDataKey, departmentDataValue) Then
-                            departmentDataValue = New DepartmentData With { _
-                                .CurrentDate = dt, _
-                                .Department = departmentName _
-                            }
-                            deptData.Add(departmentDataKey, departmentDataValue)
+                        Dim departmentID As Integer = DashboardMainDemo.HumanResourcesData.GetEmployeeDepartmentID(employee)
+                        Dim department As System.Data.DataRow = Me.GetDepartmentByDepartmentID(departmentID)
+                        Dim departmentName As String = DashboardMainDemo.HumanResourcesData.GetDepartmentName(department)
+                        Dim departmentDataKey As DashboardMainDemo.DepartmentDataKey = New DashboardMainDemo.DepartmentDataKey(dt, departmentName)
+                        Dim departmentDataValue As DashboardMainDemo.DepartmentData = Nothing
+                        If Not Me.deptData.TryGetValue(departmentDataKey, departmentDataValue) Then
+                            departmentDataValue = New DashboardMainDemo.DepartmentData With {.CurrentDate = dt, .Department = departmentName}
+                            Me.deptData.Add(departmentDataKey, departmentDataValue)
                         End If
+
                         departmentDataValue.HeadCount += 1
-                        If historyItem.IsRetired(dt) Then
-                            departmentDataValue.RetiredCount += 1
-                        End If
-
-                        Dim baseSalary As Decimal = GetDepartmentBaseSalary(department)
-                        Dim salary As Decimal = baseSalary + CDec(DataHelper.Random(rand, CDbl(baseSalary) / rand.Next(1, 5)))
-                        Dim bonus As Decimal = CDec(DataHelper.Random(rand, CDbl(salary), True))
-                        Dim overtime As Decimal = CDec(DataHelper.Random(rand, CDbl(salary) / rand.Next(1, 5), True))
-
+                        If historyItem.IsRetired(dt) Then departmentDataValue.RetiredCount += 1
+                        Dim baseSalary As Decimal = DashboardMainDemo.HumanResourcesData.GetDepartmentBaseSalary(department)
+                        Dim salary As Decimal = baseSalary + CDec(DashboardMainDemo.DataHelper.Random(Me.rand, CDbl(baseSalary) / Me.rand.[Next](1, 5)))
+                        Dim bonus As Decimal = CDec(DashboardMainDemo.DataHelper.Random(Me.rand, CDbl(salary), True))
+                        Dim overtime As Decimal = CDec(DashboardMainDemo.DataHelper.Random(Me.rand, CDbl(salary) / Me.rand.[Next](1, 5), True))
                         Dim vacationDays As Integer = 0
-                        If rand.NextDouble() > 0.5 Then
-                            vacationDays = rand.Next(0, 10)
-                        End If
+                        If Me.rand.NextDouble() > 0.5 Then vacationDays = Me.rand.[Next](0, 10)
                         Dim sickLeaveDays As Integer = 0
-                        If rand.NextDouble() > 0.5 Then
-                            sickLeaveDays = rand.Next(0, 5)
-                        End If
-
-                        empData.Add(New EmployeeData With { _
-                            .CurrentDate = dt, _
-                            .Department = departmentName, _
-                            .Employee = fullName, _
-                            .Salary = salary, _
-                            .Bonus = bonus, _
-                            .Overtime = overtime, _
-                            .VacationDays = vacationDays, _
-                            .SickLeaveDays = sickLeaveDays _
-                        })
+                        If Me.rand.NextDouble() > 0.5 Then sickLeaveDays = Me.rand.[Next](0, 5)
+                        Me.empData.Add(New DashboardMainDemo.EmployeeData With {.CurrentDate = dt, .Department = departmentName, .Employee = fullName, .Salary = salary, .Bonus = bonus, .Overtime = overtime, .VacationDays = vacationDays, .SickLeaveDays = sickLeaveDays})
                     End If
-                Next employee
+                Next
+
                 dt = dt.AddMonths(1)
-            Loop
-            For Each data As DepartmentData In deptData.Values
+            End While
+
+            For Each data As DashboardMainDemo.DepartmentData In Me.deptData.Values
                 data.StaffTurnrover = If(data.HeadCount > 0, CDbl(data.RetiredCount) / data.HeadCount, 0)
                 data.StaffTurnroverCritical = 0.01
-            Next data
+            Next
         End Sub
+
         Private Sub CreateImployeesHistory()
-            Dim totalMonths As Integer = FullYears * 12 + endDate.Month
-            For Each employee As DataRow In Employees
-                Dim hiredDate? As Date = Nothing
+            Dim totalMonths As Integer = DashboardMainDemo.HumanResourcesData.FullYears * 12 + Me.endDate.Month
+            For Each employee As System.Data.DataRow In Me.Employees
+                Dim hiredDate As System.DateTime? = Nothing
                 Dim hiredMonth As Integer = 0
-                If rand.NextDouble() > 0.2 Then
-                    hiredMonth = CInt((Math.Round(DataHelper.Random(rand, totalMonths, True))))
-                    hiredDate = startDate.AddMonths(hiredMonth)
+                If Me.rand.NextDouble() > 0.2 Then
+                    hiredMonth = CInt(System.Math.Round(DashboardMainDemo.DataHelper.Random(Me.rand, totalMonths, True)))
+                    hiredDate = Me.startDate.AddMonths(hiredMonth)
                 End If
-                Dim retiredDate? As Date = Nothing
-                If rand.NextDouble() > 0.3 Then
-                    Dim retiredMonth As Integer = CInt((Math.Round(DataHelper.Random(rand, totalMonths, True))))
-                    If retiredMonth > hiredMonth Then
-                        retiredDate = startDate.AddMonths(retiredMonth)
-                    End If
+
+                Dim retiredDate As System.DateTime? = Nothing
+                If Me.rand.NextDouble() > 0.3 Then
+                    Dim retiredMonth As Integer = CInt(System.Math.Round(DashboardMainDemo.DataHelper.Random(Me.rand, totalMonths, True)))
+                    If retiredMonth > hiredMonth Then retiredDate = Me.startDate.AddMonths(retiredMonth)
                 End If
-                employeesHistory.Add(GetEmployeeFullName(employee), New HistoryItem With { _
-                    .HiredDate = hiredDate, _
-                    .RetiredDate = retiredDate _
-                })
-            Next employee
+
+                Me.employeesHistory.Add(DashboardMainDemo.HumanResourcesData.GetEmployeeFullName(employee), New DashboardMainDemo.HumanResourcesData.HistoryItem With {.HiredDate = hiredDate, .RetiredDate = retiredDate})
+            Next
         End Sub
+
         Private Function GetDepartmentByDepartmentID(ByVal departmentID As Integer) As DataRow
-            Return departmentsTable.Select(String.Format("DepartmentID = {0}", departmentID))(0)
+            Return Me.departmentsTable.[Select](String.Format("DepartmentID = {0}", departmentID))(0)
         End Function
     End Class
 
     Public Class DepartmentData
-        Private staffTurnCritical As Double
-        Private staffTurn As Double
-        Private retCount As Integer
-        Private hCount As Integer
-        Private dept As String
-        Private curtDate As Date
 
-        Public Property CurrentDate() As Date
+        Private staffTurnCritical As Double
+
+        Private staffTurn As Double
+
+        Private retCount As Integer
+
+        Private hCount As Integer
+
+        Private dept As String
+
+        Private curtDate As System.DateTime
+
+        Public Property CurrentDate As DateTime
             Get
-                Return curtDate
+                Return Me.curtDate
             End Get
-            Set(ByVal value As Date)
-                curtDate = value
+
+            Set(ByVal value As DateTime)
+                Me.curtDate = value
             End Set
         End Property
-        Public Property Department() As String
+
+        Public Property Department As String
             Get
-                Return dept
+                Return Me.dept
             End Get
+
             Set(ByVal value As String)
-                dept = value
+                Me.dept = value
             End Set
         End Property
-        Public Property HeadCount() As Integer
+
+        Public Property HeadCount As Integer
             Get
-                Return hCount
+                Return Me.hCount
             End Get
+
             Set(ByVal value As Integer)
-                hCount = value
+                Me.hCount = value
             End Set
         End Property
-        Public Property RetiredCount() As Integer
+
+        Public Property RetiredCount As Integer
             Get
-                Return retCount
+                Return Me.retCount
             End Get
+
             Set(ByVal value As Integer)
-                retCount = value
+                Me.retCount = value
             End Set
         End Property
-        Public Property StaffTurnrover() As Double
+
+        Public Property StaffTurnrover As Double
             Get
-                Return staffTurn
+                Return Me.staffTurn
             End Get
+
             Set(ByVal value As Double)
-                staffTurn = value
+                Me.staffTurn = value
             End Set
         End Property
-        Public Property StaffTurnroverCritical() As Double
+
+        Public Property StaffTurnroverCritical As Double
             Get
-                Return staffTurnCritical
+                Return Me.staffTurnCritical
             End Get
+
             Set(ByVal value As Double)
-                staffTurnCritical = value
+                Me.staffTurnCritical = value
             End Set
         End Property
     End Class
 
     Public Class DepartmentDataKey
-        Private ReadOnly dt As Date
+
+        Private ReadOnly dt As System.DateTime
+
         Private ReadOnly dept As String
 
-        Public Sub New(ByVal dt As Date, ByVal dept As String)
+        Public Sub New(ByVal dt As System.DateTime, ByVal dept As String)
             Me.dt = dt
             Me.dept = dept
         End Sub
+
         Public Overrides Function Equals(ByVal obj As Object) As Boolean
-            Dim key As DepartmentDataKey = DirectCast(obj, DepartmentDataKey)
-            Return key.dt = dt AndAlso key.dept = dept
+            Dim key As DashboardMainDemo.DepartmentDataKey = CType(obj, DashboardMainDemo.DepartmentDataKey)
+            Return key.dt = Me.dt AndAlso Equals(key.dept, Me.dept)
         End Function
+
         Public Overrides Function GetHashCode() As Integer
-            Return dt.GetHashCode() Xor dept.GetHashCode()
+            Return Me.dt.GetHashCode() Xor Me.dept.GetHashCode()
         End Function
     End Class
 
     Public Class EmployeeData
-        Private sickLDays As Integer
-        Private overt As Decimal
-        Private vacDays As Integer
-        Private bon As Decimal
-        Private sal As Decimal
-        Private emp As String
-        Private dept As String
-        Private curtDate As Date
 
-        Public Property CurrentDate() As Date
+        Private sickLDays As Integer
+
+        Private overt As Decimal
+
+        Private vacDays As Integer
+
+        Private bon As Decimal
+
+        Private sal As Decimal
+
+        Private emp As String
+
+        Private dept As String
+
+        Private curtDate As System.DateTime
+
+        Public Property CurrentDate As DateTime
             Get
-                Return curtDate
+                Return Me.curtDate
             End Get
-            Set(ByVal value As Date)
-                curtDate = value
+
+            Set(ByVal value As DateTime)
+                Me.curtDate = value
             End Set
         End Property
-        Public Property Department() As String
+
+        Public Property Department As String
             Get
-                Return dept
+                Return Me.dept
             End Get
+
             Set(ByVal value As String)
-                dept = value
+                Me.dept = value
             End Set
         End Property
-        Public Property Employee() As String
+
+        Public Property Employee As String
             Get
-                Return emp
+                Return Me.emp
             End Get
+
             Set(ByVal value As String)
-                emp = value
+                Me.emp = value
             End Set
         End Property
-        Public Property Salary() As Decimal
+
+        Public Property Salary As Decimal
             Get
-                Return sal
+                Return Me.sal
             End Get
+
             Set(ByVal value As Decimal)
-                sal = value
+                Me.sal = value
             End Set
         End Property
-        Public Property Bonus() As Decimal
+
+        Public Property Bonus As Decimal
             Get
-                Return bon
+                Return Me.bon
             End Get
+
             Set(ByVal value As Decimal)
-                bon = value
+                Me.bon = value
             End Set
         End Property
-        Public Property Overtime() As Decimal
+
+        Public Property Overtime As Decimal
             Get
-                Return overt
+                Return Me.overt
             End Get
+
             Set(ByVal value As Decimal)
-                overt = value
+                Me.overt = value
             End Set
         End Property
-        Public Property VacationDays() As Integer
+
+        Public Property VacationDays As Integer
             Get
-                Return vacDays
+                Return Me.vacDays
             End Get
+
             Set(ByVal value As Integer)
-                vacDays = value
+                Me.vacDays = value
             End Set
         End Property
-        Public Property SickLeaveDays() As Integer
+
+        Public Property SickLeaveDays As Integer
             Get
-                Return sickLDays
+                Return Me.sickLDays
             End Get
+
             Set(ByVal value As Integer)
-                sickLDays = value
+                Me.sickLDays = value
             End Set
         End Property
     End Class

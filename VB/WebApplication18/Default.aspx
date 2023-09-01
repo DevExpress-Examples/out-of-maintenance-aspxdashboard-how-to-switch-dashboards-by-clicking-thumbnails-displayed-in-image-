@@ -1,4 +1,4 @@
-﻿<%@ Page Language="vb" AutoEventWireup="true" CodeBehind="Default.aspx.vb" Inherits="WebApplication18.Default" %>
+<%@ Page Language="VB" AutoEventWireup="true" CodeBehind="Default.aspx.vb" Inherits="WebApplication18.Default" %>
 
 <%@ Register Assembly="DevExpress.Web.v17.1, Version=17.1.17.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
 
@@ -25,7 +25,7 @@
             .dxisControl .dxis-nbSelectedItem,
             .dxisControl .dxis-nbSelectedItem > div,
             .dxisControl .dxis-nbItem .dxis-nbHoverItem {
-                display: none !important; // Hide Selection Frame 
+                display: none !important; /* Hide Selection Frame */
             }
 
         .container {
@@ -79,8 +79,8 @@
                                         <dx:ASPxImageSlider ID="ImageSlider" runat="server" EnableViewState="False" EnableTheming="False" ImageSourceFolder="\Thumbnails" Width="100%" ShowImageArea="false" OnItemDataBound="ImageSlider_ItemDataBound">
                                             <ItemThumbnailTemplate>
                                                 <div class="container">
-                                                    <dx:ASPxImage runat="server" Width="200px" Height="200px" ImageUrl='<%#DataBinder.Eval(Container.DataItem, "ImageUrl")%>' AlternateText='<%#DataBinder.Eval(Container.DataItem, "Name")%>' ShowLoadingImage="true"></dx:ASPxImage>
-                                                    <span class="name"><%#DataBinder.Eval(Container.DataItem, "Name")%></span>
+                                                    <dx:ASPxImage runat="server" Width="200px" Height="200px" ImageUrl='<%# DataBinder.Eval(Container.DataItem, "ImageUrl") %>' AlternateText='<%# DataBinder.Eval(Container.DataItem, "Name") %>' ShowLoadingImage="true"></dx:ASPxImage>
+                                                    <span class="name"><%# DataBinder.Eval(Container.DataItem, "Name") %></span>
                                                 </div>
                                             </ItemThumbnailTemplate>
                                             <SettingsBehavior ExtremeItemClickMode="Select" />
